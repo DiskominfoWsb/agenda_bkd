@@ -3969,7 +3969,7 @@ public function surat_skpns() {
 		//$a['nextagenda']= $this->db->query("SELECT * FROM t_kegiatan where tahun='$a[thn]' ")->num_rows()+1;
 		//$a['data']	= $this->db->query("SELECT * FROM t_kegiatan order by no_keg DESC ")->result();
 		$a['data2']	= $this->db->query("SELECT a.* ,date_format(a.tgl_keg,'%Y-%m-%d') as tgl_keg_, date_format(a.tgl_keg_end,'%d-%m-%Y') as tgl_keg_end_ FROM t_kegiatan a where a.tgl_keg $next CURDATE() order by tgl_keg ASC ")->result();		
-		$a['data1']	= $this->db->query("SELECT DISTINCT date_format(tgl_keg,'%Y-%m-%d') as tgl_keg1 FROM t_kegiatan where tgl_keg $next CURDATE() order by tgl_keg ASC")->result();
+		$a['data1']	= $this->db->query("SELECT tgl_keg1 FROM (SELECT DISTINCT date_format(tgl_keg,'%Y-%m-%d') as tgl_keg1 FROM t_kegiatan WHERE tgl_keg >= CURDATE() ) as subquery ORDER BY tgl_keg1 ASC;")->result();
 		$this->load->view('admin/login',$a);
 		}
 		
